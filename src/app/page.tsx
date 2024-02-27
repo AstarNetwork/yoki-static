@@ -1,113 +1,186 @@
+"use client";
+import { useOffsetTop } from "@/hooks/useOffsetTop";
 import Image from "next/image";
+import boy from "../../public/boy.png"
+import girl from "../../public/girl.png"
+import fox from "../../public/fox.png"
+import capsules from "../../public/capsules.png"
+import leaves from "../../public/leaves.png"
+import logo from "../../public/logo_with_leaves.png"
+import small_capsules from "../../public/small-capsules.png"
+import astarLogo from "../../public/astar-logo.svg"
+import background from "../../public/main_background.png"
 
-export default function Home() {
+import "./Home.css";
+import { useMemo, useRef } from "react";
+import Link from "next/link";
+
+export default function App() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { viewportTop, pageOffsetTop } = useOffsetTop(ref);
+
+  const blurSize = useMemo(() => {
+    if (viewportTop === undefined || pageOffsetTop === undefined) return 0;
+    const size = (pageOffsetTop - viewportTop) / 200;
+    return size;
+  }, [viewportTop, pageOffsetTop]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <section>
+      <div className="fixed h-18 left-0 top-0 z-50 flex items-center py-3 px-3 sm:px-5">
+        <img className="w-28 sm:w-36" src={astarLogo.src} alt="astar logo" />
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
+      <div className="h-svh w-full fixed top-0 left-0 z-0">
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+          priority={true}
+          src={background}
+          alt="background"
+          fill={true}
+          style={{
+            filter: `blur(${blurSize}px)`,
+          }}
         />
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="pt-20 h-auto">
+        <div className="flex items-center justify-center relative">
+          <Image
+            id="logo"
+            priority={true}
+            className="h-72 sm:h-[450px] aspect-square object-contain"
+            src={logo}
+            alt="yoki logo"
+            style={{
+              filter: `blur(${blurSize}px)`,
+            }}
+          />
+        </div>
       </div>
-    </main>
+      <div
+        className="flex items-center justify-center -mt-5 sticky top-0 sm:-mt-20"
+        style={{
+          filter: `blur(${blurSize}px)`,
+        }}
+      >
+        <Image
+          id="bg"
+          className="absolute z-10 h-[570px] object-cover sm:h-auto"
+          src={capsules}
+          alt="capsules"
+        />
+        <Image
+          id="bg"
+          className="absolute h-[570px] object-cover sm:h-auto"
+          src={small_capsules}
+          alt="capsules"
+        />
+        <Image
+          id="bg"
+          className="absolute h-[570px] object-cover sm:h-auto"
+          src={leaves}
+          alt="capsules"
+        />
+        <div className="relative z-10 flex">
+          <Image
+            id="boy"
+            className="absolute h-[570px] object-cover sm:h-auto"
+            src={boy}
+            alt="boy"
+          />
+          <Image id="girl" className="h-[570px] object-cover sm:h-auto" src={girl} alt="girl" />
+          <Image
+            id="fox"
+            className="absolute h-[570px] object-cover sm:h-auto"
+            src={fox}
+            alt="fox"
+          />
+        </div>
+      </div>
+      <div ref={ref} className="features pb-20 pt-10 sm:pt-1">
+        <div className="mt-0 sm:-mt-20">
+          <div className="
+            flex
+            gap-5
+            justify-center
+            flex-col
+            items-center
+            mb-16
+            w-full
+            sm:flex-row
+            sm:items-stretch
+            sm:justify-evenly
+            ">
+            <div
+              className="
+              features-card
+              flex flex-col
+              justify-between
+              items-center
+              shrink-0
+              border
+              border-solid
+              border-white
+              px-8
+              pt-8
+              pb-14
+              gap-6
+              w-96"
+            >
+              <h2 className="title pt-4">Yoki Origins - First Edition Capsule</h2>
+              <p className="content">Yoki Origins is an exciting journey to discover one-of-kind characters inspired by supernatural creatures from Japan. Join this web3 adventure for everyone and be among the first to experience the magic and charm of Yoki using the button below!</p>
+              <Link target="_blank" href="https://astarnetwork.deform.cc/first-edition-capsule-1">
+                <button className="
+                  rounded-2xl
+                  py-4
+                  px-3
+                  uppercase
+                  font-black
+                  text-lg
+                  border
+                  text-white
+                  border-white
+                  bg-[#0297FB]
+                  hover-glow
+                ">Mint A First Edition Capsule</button>
+              </Link>
+            </div>
+            <div
+              className="
+              features-card
+              flex flex-col
+              items-start
+              border
+              border-solid
+              border-white
+              px-8
+              pt-8
+              pb-14
+              gap-6
+              w-96
+              overflow-auto
+              min-h-full
+
+              "
+            >
+              <h2 className="title">Astar Network Ecosystem</h2>
+              <p className="content">Astar Network is the gateway for projects across enterprises, entertainment & gaming in Japan, Korea, and beyond, driving global adoption while delivering web3 products for everyone. Astar zkEVM is the new Layer-2 solution to scale a web3 experience on Ethereum with zero knowledge technology, powered by Polygon AggLayer & CDK.</p>
+              <Link target="_blank" href="https://discord.gg/AstarNetwork">
+                <button className="
+                  rounded-2xl
+                  p-4
+                  uppercase
+                  font-black
+                  text-lg
+                  border
+                  text-white
+                  border-white
+                  bg-[#0297FB]
+                  hover-glow
+                ">Join the Astar Community</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
